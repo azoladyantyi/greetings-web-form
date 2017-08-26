@@ -5,32 +5,50 @@ var app = express();
 
 
 // seting rendering engine
-app.engine("handlebars",exphbs({
-  defaultLayout:"main",
-  extname:"handlebars"
+app.engine("handlebars", exphbs({
+    defaultLayout: "main",
+    extname: "handlebars"
 }));
 app.use(express.static("public"));
 app.use(form.urlencoded({
-  extended:false
+    extended: false
 }));
 app.set("view engine", "handlebars")
 
-app.get("/",function(req,res) {
-  res.render("home");
-});
-app.post("/",function(req,res){
-  var greet ='Hello ' + req.body.name
-  res.render('home', {
-    greetingMsg: greet
-  });
+app.get("/", function(req, res) {
+    res.render("home");
 });
 
+// app.post("/",function(req,res){
+//  greeted = 'Hello, ' + req.body.name + '!';
+//   res.render('home', {
+//     greetingMsg: greet
+//   });
+// });
+
+
+
+var greeted = "";
+app.post("/", function(req, res) {
+    var greet = req.body.name;
+    var language = req.body.language;
+    if (language === "isixhosa") {
+        greeted = "Molo, " + greet;
+    } else if (language === "english") {
+        greeted = "Hello, " + greet;
+    } else if (language === "sotho") {
+        greeted = "Dumela, " + greet;
+    }
+    res.render("home", {
+        greetingMsg: greeted
+    });
+});
 
 
 //start the server
-      var server = app.listen(3000, function() {
-          var host = server.address().address;
-          var port = server.address().port;
+var server = app.listen(3000, function() {
+    var host = server.address().address;
+    var port = server.address().port;
 
-          console.log('Example app listening at http://%s:%s', host, port);
-      });
+    console.log('Example app listening at http://%s:%s', host, port);
+});
