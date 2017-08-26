@@ -7,9 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "azola",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.4"
-  }
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.10"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azoladyantyi/greetings-web-form.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azoladyantyi/greetings-web-form/issues"
+  },
+  "homepage": "https://github.com/azoladyantyi/greetings-web-form#readme"
 }
