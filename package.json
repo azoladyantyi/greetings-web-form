@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "script": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "azola",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cool-ascii-faces": "1.3.4",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.10"
