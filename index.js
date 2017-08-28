@@ -28,7 +28,7 @@ app.post("/", function(req, res) {
     } else if (language === "english") {
         greeted = "Hello, " + greet;
     } else if (language === "sotho") {
-        greeted = "Dumela, " + greet;
+        greeted = "Dumela, " + greet ;
     }
     res.render("home", {
         greetingMsg: greeted
