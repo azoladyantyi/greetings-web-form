@@ -1,10 +1,22 @@
-body{
-  background-color: lightblue;
+body {
+    background-color: lightblue;
+    text-align: center;
 }
-h1{
-  text-align: center;
-   color: green;
-   font-size: 90px;
-   background-position: center;
-   background-color:white;
+
+h1 {
+    text-align: center;
+    color: green;
+    font-size: 90px;
+    background-position: center;
+    background-color: white;
+}
+
+p {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.greetedpeeps {
+    font-size: 20px;
+    font-weight: normal;
 }
