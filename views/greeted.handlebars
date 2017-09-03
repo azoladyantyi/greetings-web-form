@@ -1,6 +1,7 @@
 <h3>greeted list</h3>
 <form value="name" class="greetedNames" action="/greeted" method="post">
-  {{#each greetedPeeps}}
+  {{#each greeted}}
     <p class="greetedPeeps">{{this}}</p>
   {{/each}}
+  <a href="/">back to main page and greet again</a>
 </form>

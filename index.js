@@ -20,7 +20,7 @@ app.get("/", function(req, res) {
 });
 var list = [];
 var greeted = "";
-app.post("/", function(req, res) {
+app.post("/greet", function(req, res) {
     var greet = req.body.name;
     var language = req.body.language;
     if (language === "isixhosa") {
@@ -39,7 +39,7 @@ app.post("/", function(req, res) {
 // console.log('listGreeted');
 app.get('/greeted', function(req, res) {
     res.render('greeted', {
-      greetedPeeps : list
+      greeted : list
     });
 });
 

@@ -1,4 +1,13 @@
-<p>Counter:</p>
-<form class="" action="index.html" method="post">
-  
-</form>
+<h1>Greetings Using Forms</h1>
+<p>
+    <a href="/greetings" class="btn">Click here to greet again</a>
+</p>
+
+
+<ul>
+    {{#each Greeted}}
+        <a href="/counter/{{this}}">
+            <li>{{this}}</li>
+        </a>
+    {{/each}}
+</ul>
