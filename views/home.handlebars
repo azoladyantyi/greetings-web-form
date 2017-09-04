@@ -2,12 +2,12 @@
 <form method="post" action="/greet" >
     <input type="text" name="name" value=""placeholder="please enter a name" >
     <br><br>
-    <input type="radio" name="language" id="languages" value="isixhosa">Isixhosa
-    <input type="radio" name="language" id="languages" value="english">English
+    <input type="radio" name="language" id="languages" value="isixhosa" required="">Isixhosa</input>
+    <input type="radio" name="language" id="languages" value="english" >English
     <input type="radio" name="language" id="languages" value="sotho">Sotho
     <br><br>
-    <button type="submit" name="button">Greet me</button>
-    <button type="Reset" name="button">Reset Counter</button>
+    <button type="submit" name="button" required="">Greet me</button>
+    <!-- <button type="Reset" name="button">Reset Counter</button> -->
     <p>{{greetingMsg}}</p>
     <a href="/greeted">Greeted People</a>
 </form>
