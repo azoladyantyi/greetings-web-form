@@ -17,12 +17,19 @@ app.set("view engine", "handlebars")
 
 app.get("/", function(req, res) {
     res.render("home");
+
 });
 var list = [];
+var avoidDuplicate = [];
 var greeted = "";
+console.log(list);
 app.post("/greet", function(req, res) {
     var greet = req.body.name;
     var language = req.body.language;
+
+    if (avoidDuplicate.indexOf(greet) === -1) {
+        avoidDuplicate.push(greet)
+    }
     if (language === "isixhosa") {
         greeted = "Molo, " + greet;
     } else if (language === "english") {
@@ -33,13 +40,13 @@ app.post("/greet", function(req, res) {
     res.render("home", {
         greetingMsg: greeted
     });
-     list.push(greet);
+    list.push(greet);
 });
 
 // console.log('listGreeted');
 app.get('/greeted', function(req, res) {
     res.render('greeted', {
-      greeted : list
+        greeted: avoidDuplicate
     });
 });
 
