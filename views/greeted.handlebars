@@ -1,8 +1,8 @@
 <h3>greeted list</h3>
 <form value="name" class="greetedNames" action="/greeted" method="post">
-  {{#each greeted}}
-    <p class="greetedPeeps">{{this}}</p>
-  {{/each}}
-  <a href="/">back to main page and greet again</a>
-  <a href="/greeted/{{greeted}}">
+    {{#each greeted}}
+          <p class="greetedName"><a href="/greeted/{{name}}">{{name}}</a></p>
+    {{/each}}
+    <a href="/">back to main page and greet again</a>
+    <!-- <a href="/greeted/{{greeted}}"> -->
 </form>

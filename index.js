@@ -1,184 +1,163 @@
 const express = require('express');
 const exphbs = require("express-handlebars");
 const form = require('body-parser');
-var mongoose = require('mongoose')
-//const myDatabase = require('./models');
+const flash = require('express-flash');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const mongoURL = process.env.MONGO_DB_URL || "mongodb://localhost/greetings";
+const Models = require("./models");
+const models = Models(mongoURL);
+
 
 var app = express();
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: {
+        maxAge: 60000 * 30
+    }
+}));
+app.use(flash());
 
-// module.exports = function(models) {
-//     const showGreez = function(req, res, next) {
-//         res.redirect('/')
-//     }
-
-// seting rendering engine
+//set up the engine
 app.engine("handlebars", exphbs({
     defaultLayout: "main",
     extname: "handlebars"
 }));
 app.use(express.static("public"));
+app.use(express.static("views"))
 app.use(form.urlencoded({
-    extended: false
+    extended: true
 }));
-
-var mongoURL = process.env.MONGO_DB_URL || ('mongodb://localhost/greetingsApp')
-mongoose.connection.on('error', function(err) {
-console.log('Mongo error : ');
-console.log(err);
-});
-
-mongoose.connect(mongoURL, function(err){
-  if(err){
-    console.log('Error connecting to DB' + err);
-  }
-else {
-  console.log('connection to DB is successful');
-}
-})
-
-var Name = mongoose.model('Name', {
-  name : String,
-  countName : Number
-});
-
 app.set("view engine", "handlebars")
 
 app.get("/", function(req, res) {
     res.render("home");
 });
 
-var greetingCounter = 0;
-app.post("/greet", function(req, res) {
+app.post("/", function(req, res, next) {
     var greet = req.body.name;
     var language = req.body.language;
+    var greetedName = "";
 
-    if (avoidDuplicate.indexOf(greet) === -1) {
-        avoidDuplicate.push(greet)
-    }
     if (language === "isixhosa") {
         greetedName = "Molo, " + greet;
-        greetingCounter++
+
     } else if (language === "english") {
         greetedName = "Hello, " + greet;
-        greetingCounter++
+
     } else if (language === "sotho") {
         greetedName = "Dumela, " + greet;
-        greetingCounter++
     }
+    models.Name.findOne({
+        name: greet
+    }, function(err, results) {
+        if (err) {
+            console.log(err);
 
-var newNames = {
-  name: greet,
-  countName : 1
-}
-
-        Name.findOne({
-            name: greet
-
-        }, function(err, results) {
-            //console.log greetedPerson);
-            // console.log(greetedNames);
+        } else {
             if (!results) {
-              Name.create(newNames)
-                //return next(err)
-                //console.log(err);
-            // } else if (greetedNames) {
-            //
-            //     greetedNames.counter += 1;
-            //     greetedNames.save();
+                models.Name.create({
+                    name: greet,
+                    counter: 1
+                }, function(err, user) {
+                    if (err = '11000') {
+                        req.flash("err_mesg", "hey! wellcome back :)");
+                    }
+                    models.Name.find({}, function(err, results) {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            res.render("home", {
+                                greetingMsg: greetedName,
+                                count: results.length
+                            });
+                            console.log(results.length);
+                        }
+                    });
 
-            }
-            else {
-                // console.log(greetedNames);
-                Name.create({
-                    name: name
-                    // Counter: 1
+                })
+            } else {
+
+                results.counter += 1;
+                results.save(function(err, results) {
+                    if (err) {
+                        return next(err);
+                    } else {
+                      req.flash("err_mesg", "hey! wellcome back :)");
+                        res.render("home", {
+                            greetingMsg: greetedName,
+                            count: results.length
+                        });
+
+                    }
                 });
-                results.save()
+
             }
+        }
 
-        });
 
-    res.render("home", {
-        greetingMsg: greetedName,
-        count : greetingCounter
-    });
-    list.push(greet);
+    })
+
 });
 
+//display all the names from the database
+app.get('/greeted', function(req, res, next) {
 
-var list = [];
-var avoidDuplicate = [];
-var greeted = "";
-// console.log(list);
-app.post("/greet", function(req, res) {
-    var greet = req.body.name;
-    var language = req.body.language;
+    models.Name.find({}, function(err, results) {
+        if (err) {
+            return next(err);
+        } else {
+            res.render("greeted", {
+                greeted: results
 
-    if (avoidDuplicate.indexOf(greet) === -1) {
-        avoidDuplicate.push(greet)
-    }
-    if (language === "isixhosa") {
-        greetedName = "Molo, " + greet;
-    } else if (language === "english") {
-        greetedName = "Hello, " + greet;
-    } else if (language === "sotho") {
-        greetedName = "Dumela, " + greet;
-    }
+            });
 
-    // myDatabase.save(function(err) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log('newUser save to the database');
-    //     }
-    // });
-    res.render("home", {
-        greetingMsg: greetedName
-    });
-    list.push(greet);
-});
-
-// console.log('listGreeted');
-app.get('/greeted', function(req, res) {
-    res.render('greeted', {
-        greeted: avoidDuplicate
+        }
 
     });
 });
-app.post('/counter', function(req, res) {
-    greeted.counter += 1;
-    res.render('counter', {
-        counting: userCounts
-    });
-});
 
-// app.get('/counter', function(req, res) {
-//   var greet = req.body.name;
-//   var userCounts = {};
-//   //loop through all the users
-//   list.forEach(function(greet) {
-//     //initialize the value in an array
-//     if (userCounts[greet] === undefined) {
-//       userCounts[greet] = 0;
-//     }
-//     // increment the counter for each user in the Map
-//     userCounts[greet] = userCounts[greet] + 1;
-//   });
-//
-//   //test userCounts using terminal
-//   // console.log((userCounts));
-//   res.send(greet + "has been greeted " + userCounts[greet] + 'times')
-// });
-//start the server
+//view count per person using a link
+app.get("/greeted/:name", function(req, res) {
+    var name = req.params.name;
+    models.Name.findOne({
+        name: name
+    }, function(error, results) {
+        if (error) {
+            // console.log(error);
+        } else{
+
+            res.render("greetedCounter", {
+                name: results.name,
+                nameCount: results.counter
+            })
+
+        }
+    })
+
+})
+
+
+//reseting data from the database
+app.post('/reset', function(req, res) {
+    models.Name.remove({}, function(err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            return data;
+        }
+
+    })
+});
 
 app.set('port', (process.env.PORT || 5000));
 
-app.use(function(err, req, res, next){
-  res.status(500).send(err.stack)
-})
+app.use(function(err, req, res, next) {
+    res.status(500).send(err.stack)
+});
 
 app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
-
+    console.log('Node app is running on port' + app.get('port'));
 
 });

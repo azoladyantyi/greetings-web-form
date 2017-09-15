@@ -1,5 +1,5 @@
 <h1>Greetings Web Form!</h1>
-<form method="post" action="/greet" >
+<form method="post" action="/" >
     <input type="text" name="name" value=""placeholder="please enter a name" >
     <br><br>
     <input type="radio" name="language" id="languages" value="isixhosa" required="">Isixhosa</input>
@@ -7,8 +7,12 @@
     <input type="radio" name="language" id="languages" value="sotho"required="">Sotho
     <br><br>
     <button type="submit" name="button" required="">Greet me</button>
+    <br><br>
     <!-- <button type="Reset" name="button">Reset Counter</button> -->
-    <p>{{greetingMsg}}</p>
+    <div class="greetingMsg">{{greetingMsg}}</div>
     <a href="/greeted">Greeted People</a>
     <div> {{count}} </div>
+</form>
+<form  method="post" action="/reset">
+  <button type="submit" name="reset" class="reset" value="reset">Reset </button>
 </form>

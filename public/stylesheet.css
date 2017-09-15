@@ -11,12 +11,14 @@ h1 {
     background-color: white;
 }
 
-p {
-    font-size: 40px;
-    font-weight: bold;
-}
+/*p {
+}*/
 
 .greetedpeeps {
     font-size: 20px;
     font-weight: normal;
+}
+.greetingMsg{
+  font-size: 40px;
+  font-weight: bold;
 }
