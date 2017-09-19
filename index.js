@@ -121,6 +121,7 @@ app.get('/greeted', function(req, res, next) {
 //view count per person using a link
 app.get("/greeted/:name", function(req, res) {
     var name = req.params.name;
+    // console.log(name);
     models.Name.findOne({
         name: name
     }, function(error, results) {
