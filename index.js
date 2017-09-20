@@ -61,7 +61,7 @@ app.post("/", function(req, res, next) {
                     name: greet,
                     counter: 1
                 }, function(err, user) {
-                    if (err = '11000') {
+                    if (err = 11000) {
                         req.flash("err_mesg", "hey! wellcome back :)");
                     }
                     models.Name.find({}, function(err, results) {
