@@ -72,7 +72,7 @@ app.post("/", function(req, res, next) {
                                 greetingMsg: greetedName,
                                 count: results.length
                             });
-                            console.log(results.length);
+                          
                         }
                     });
 
