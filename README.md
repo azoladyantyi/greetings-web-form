@@ -1,6 +1,6 @@
 # greetings-web-form
 ### Author: Azola Dyantyi
-##### Installation
+#### Installation
 **expressJs**
 http://expressjs.com/en/starter/installing.html
 
